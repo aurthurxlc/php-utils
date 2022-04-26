@@ -1,0 +1,22 @@
+{
+    "name": "buke/php-utils",
+    "description": "Some Useful PHP Utils",
+    "type": "library",
+    "authors": [
+        {
+            "name": "Buke",
+            "email": "aurthurxlc@gmail.com"
+        }
+    ],
+    "license": "MIT",
+    "minimum-stability": "dev",
+    "require": {
+        "php": ">=7.0",
+        "ext-openssl": "*"
+    },
+    "autoload": {
+        "psr-4": {
+            "Buke\\": "src/"
+        }
+    }
+}
