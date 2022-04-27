@@ -5,10 +5,10 @@ use Buke\Util\Crypto\AESUtil;
 
 require dirname(__DIR__) . '/vendor/autoload.php';
 
-print PHP_EOL . "======== 创建密钥及 IV 进行加密案例 ========" . PHP_EOL;
+print PHP_EOL . "======== PHP 7+ 创建密钥及 IV 进行加密案例 ========" . PHP_EOL;
 $key = AESTool::generateKey(16);
 $iv = AESTool::generateIV();
-$pText = "创建密钥及 IV 进行加密案例";
+$pText = "PHP 7+ 创建密钥及 IV 进行加密案例";
 
 print "key: " . bin2hex($key) . PHP_EOL;
 print "iv: " . bin2hex($iv) . PHP_EOL;
@@ -16,10 +16,10 @@ print "pText: " . $pText . PHP_EOL;
 
 $aes = new AESUtil("aes-128-cbc", $key);
 
-$cText = $aes->encryptWithIV($pText, $iv);
-print "加密后: " . bin2hex(base64_decode($cText)) . PHP_EOL;
+$cText = bin2hex($aes->encryptWithIV($pText, $iv));
+print "加密后: " . $cText . PHP_EOL;
 
-$deText = $aes->decryptWithIV($cText, $iv);
+$deText = $aes->decryptWithIV(hex2bin($cText), $iv);
 print "解密后: " . $deText . PHP_EOL;
 
 print PHP_EOL . "======== 测试跟 Java 加密后数据是否一致 ========" . PHP_EOL;
@@ -35,8 +35,12 @@ print "pText: " . $pText . PHP_EOL;
 
 $aes = new AESUtil("aes-128-cbc", $key);
 
-$cText = $aes->encryptWithIV($pText, $iv);
-print "加密后: " . bin2hex(base64_decode($cText)) . PHP_EOL;
+$cText = bin2hex($aes->encryptWithIV($pText, $iv));
+print "加密后: " . $cText . PHP_EOL;
 
-$deText = $aes->decryptWithIV($cText, $iv);
+$deText = $aes->decryptWithIV(hex2bin($cText), $iv);
 print "解密后: " . $deText . PHP_EOL;
+
+print PHP_EOL . "======== PHP 中支持的 cipher ========" . PHP_EOL;
+
+print implode(PHP_EOL,openssl_get_cipher_methods());
